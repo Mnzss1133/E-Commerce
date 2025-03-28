@@ -1,47 +1,43 @@
 package bigdata.ecommerce.model;
-
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedList;
 
-@Data
-@Entity(name = "usuario")
 public class Usuario {
-
     public Usuario() {
-        this.cartoes = new ArrayList<>();
-        this.enderecos = new ArrayList<>();
+        this.creditCards = new LinkedList<>();
+        this.addresses = new LinkedList<>();
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer userId;
 
-    @Column
+    @Column(name = "nome")
     private String nome;
 
-    @Column
+    @Column(name = "email", unique = true)
     private String email;
 
-    @Column
-    private LocalDateTime dtNascimento;
+    @Column(name = "data_nascimento")
+    private LocalDateTime dataNascimento;
 
-    @Column
+    @Column(name = "cpf", unique = true)
     private String cpf;
 
-    @Column
-    private String telefone;
+    @Column(name = "numero_telefone")
+    private String numero;
 
-    @OneToMany
-    @JoinColumn(referencedColumnName = "id", name = "id_usuario")
-    private List<Cartao> cartoes;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_id")
+    private List<Cartao> creditCards;
 
-    @OneToMany
-    @JoinColumn(referencedColumnName = "id", name = "id_usuario")
-    private List<Endereco> enderecos;
-
-
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_id")
+    private List<Endereco> addresses;
 }
