@@ -1,25 +1,27 @@
 package bigdata.ecommerce.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import java.time.LocalDateTime;
 
-@Data
-@Entity(name="cartao")
+@Getter
+@Setter
+@Entity
 public class Cartao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column
-    private String card_number;
+    private String numero;
 
     @Column
-    private LocalDateTime ExpirationDate;
+    private LocalDateTime dtExpiracao;
 
     @Column
     private String cvv;
 
     @Column
-    private Double balance;
+    private Double saldo;
 }

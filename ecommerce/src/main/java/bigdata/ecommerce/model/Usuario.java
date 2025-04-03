@@ -1,19 +1,16 @@
 package bigdata.ecommerce.model;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
 
+@Getter
+@Setter
+@Entity
 public class Usuario {
-    public Usuario() {
-        this.creditCards = new LinkedList<>();
-        this.addresses = new LinkedList<>();
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userId;
@@ -35,9 +32,9 @@ public class Usuario {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id")
-    private List<Cartao> creditCards;
+    private List<Cartao> cartoes = new LinkedList<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id")
-    private List<Endereco> addresses;
+    private List<Endereco> addresses = new LinkedList<>();
 }
