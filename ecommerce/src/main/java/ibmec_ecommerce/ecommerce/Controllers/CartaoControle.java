@@ -64,23 +64,23 @@ public class CartaoControle {
         }
 
         TransacaoResponse response = new TransacaoResponse();
-        response.setDtTransacao(LocalDateTime.now());
+        response.setDataHora(LocalDateTime.now());
 
         if (cartaoEncontrado == null) {
             response.setStatus("NOT_AUTHORIZED");
-            response.setMessage("Cartão não encontrado para o usuário");
+            response.setMensagem("Cartão não encontrado para o usuário");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
 
         if (cartaoEncontrado.getDtExpiracao().isBefore(LocalDateTime.now())) {
             response.setStatus("NOT_AUTHORIZED");
-            response.setMessage("Cartão expirado");
+            response.setMensagem("Cartão expirado");
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
         if (cartaoEncontrado.getSaldo() < request.getValor()) {
             response.setStatus("NOT_AUTHORIZED");
-            response.setMessage("Saldo insuficiente");
+            response.setMensagem("Saldo insuficiente");
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
@@ -91,7 +91,7 @@ public class CartaoControle {
 
         // Compra autorizada
         response.setStatus("AUTHORIZED");
-        response.setMessage("Compra autorizada");
+        response.setMensagem("Compra autorizada");
         response.setCodigoAutorizacao(UUID.randomUUID());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
