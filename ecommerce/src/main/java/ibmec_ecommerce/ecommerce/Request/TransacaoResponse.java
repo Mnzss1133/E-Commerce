@@ -1,5 +1,6 @@
 package ibmec_ecommerce.ecommerce.Request;
 
+import ibmec_ecommerce.ecommerce.Model.Usuario;
 import lombok.Data;
 
 @Data
