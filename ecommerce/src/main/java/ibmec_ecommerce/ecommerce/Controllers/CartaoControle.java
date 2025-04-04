@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/users/{idUser}/credit-card")
+@RequestMapping("/users/{idusuario}/credit-card")
 public class CartaoControle {
 
     @Autowired
@@ -26,7 +26,7 @@ public class CartaoControle {
     private UsuarioRepositorio usuarioRepositorio;
 
     @PostMapping
-    public ResponseEntity<Usuario> adicionarCartao(@PathVariable("idUser") int idUser, @RequestBody Cartao cartao) {
+    public ResponseEntity<Usuario> adicionarCartao(@PathVariable("idusuario") int idUser, @RequestBody Cartao cartao) {
         Optional<Usuario> usuarioOptional =usuarioRepositorio.findById(idUser);
 
         if (usuarioOptional.isEmpty()) {
@@ -44,7 +44,7 @@ public class CartaoControle {
     }
 
     @PostMapping("/authorize")
-    public ResponseEntity<TransacaoResponse> autorizarCompra(@PathVariable("idUser") int idUser,
+    public ResponseEntity<TransacaoResponse> autorizarCompra(@PathVariable("idusuario") int idUser,
                                                              @RequestBody TransacaoRequest request) {
         Optional<Usuario> usuarioOptional = usuarioRepositorio.findById(idUser);
 
