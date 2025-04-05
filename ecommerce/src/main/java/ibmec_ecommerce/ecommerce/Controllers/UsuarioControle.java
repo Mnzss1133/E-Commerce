@@ -1,5 +1,6 @@
 package ibmec_ecommerce.ecommerce.Controllers;
 
+import ibmec_ecommerce.ecommerce.Model.Cartao;
 import ibmec_ecommerce.ecommerce.Model.Usuario;
 import ibmec_ecommerce.ecommerce.Repository.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,14 +51,30 @@ public class UsuarioControle {
     @PutMapping("/{id}")
     public ResponseEntity<String> atualizarUsuario(@PathVariable int idUser, @RequestBody Usuario usuario) {
         // Verificar se o usuário existe
-        if (!usuarioRepository.existsById(idUser)) {
+        Optional<Usuario> usuarioExistente = usuarioRepository.findById(idUser);
+        if (usuarioExistente.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        // Atualizar o usuário no banco de dados
-        usuarioRepository.save(usuario);
+        // Atualizar o cartão de crédito do usuário, se necessário
+        Usuario usuarioAtualizado = usuarioExistente.get();
+        if (usuario.getCartoes() != null && !usuario.getCartoes().isEmpty()) {
+            // Aqui você pode adicionar lógica para atualizar o cartão de crédito
+            Cartao novoCartao = usuario.getCartoes().get(0);
+            usuarioAtualizado.getCartoes().clear();  // Limpa os cartões antigos
+            usuarioAtualizado.getCartoes().add(novoCartao);  // Adiciona o novo cartão
+        }
 
-        return new ResponseEntity<>("Usuário atualizado com sucesso.", HttpStatus.OK);
+        // Atualizar o restante das informações do usuário
+        usuarioAtualizado.setNome(usuario.getNome());
+        usuarioAtualizado.setEmail(usuario.getEmail());
+        usuarioAtualizado.setCpf(usuario.getCpf());
+        usuarioAtualizado.setTelefone(usuario.getTelefone());
+
+        // Salvar o usuário atualizado no banco de dados
+        usuarioRepository.save(usuarioAtualizado);
+
+        return new ResponseEntity<>("Usuário e cartão de crédito atualizados com sucesso.", HttpStatus.OK);
     }
 
     // Método para excluir um usuário

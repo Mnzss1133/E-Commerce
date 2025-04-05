@@ -1,34 +1,24 @@
 package ibmec_ecommerce.ecommerce.Model;
-import java.util.List;
-
-import org.springframework.data.annotation.Id;
 
 import com.azure.spring.data.cosmos.core.mapping.Container;
 import com.azure.spring.data.cosmos.core.mapping.PartitionKey;
-
+import org.springframework.data.annotation.Id;
 import lombok.Data;
 
+import java.util.List;
 
 @Data
-@Container(containerName = "products")
+@Container(containerName = "products")  // Define o container no Cosmos DB
 public class Produto {
 
-
         @Id
-        private String id;
+        private String id;  // ID único do produto
 
-        @PartitionKey
-        private String productCategory;
+        @PartitionKey  // Chave de partição para distribuir dados
+        private String productCategory;  // Categoria do produto
 
-        private String productName;
-
-        private double price;
-
-        private List<String> imageUrl;
-
-        private String productDescription;
-
-
-
+        private String productName;  // Nome do produto
+        private double price;  // Preço do produto
+        private List<String> imageUrl;  // URLs das imagens
+        private String productDescription;  // Descrição do produto
 }
-

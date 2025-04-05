@@ -21,4 +21,9 @@ public class Cartao {
 
     @Column
     private Double saldo;
+
+    // Adicionando o relacionamento com o usuário
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")  // Chave estrangeira para o usuário
+    private Usuario usuario;
 }
