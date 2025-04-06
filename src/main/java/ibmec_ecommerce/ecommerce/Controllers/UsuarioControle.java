@@ -27,8 +27,8 @@ public class UsuarioControle {
 
     // Método para buscar um usuário pelo ID
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable int id) {
-        Optional<Usuario> usuario = usuarioRepository.findById(id);
+    public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable int idUser) {
+        Optional<Usuario> usuario = usuarioRepository.findById(idUser);
         return usuario.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -49,9 +49,9 @@ public class UsuarioControle {
 
     // Método para atualizar as informações de um usuário
     @PutMapping("/{id}")
-    public ResponseEntity<String> atualizarUsuario(@PathVariable int id, @RequestBody Usuario usuario) {
+    public ResponseEntity<String> atualizarUsuario(@PathVariable int idUser, @RequestBody Usuario usuario) {
         // Verificar se o usuário existe
-        Optional<Usuario> usuarioExistente = usuarioRepository.findById(id);
+        Optional<Usuario> usuarioExistente = usuarioRepository.findById(idUser);
         if (usuarioExistente.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -79,8 +79,8 @@ public class UsuarioControle {
 
     // Método para excluir um usuário
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> excluirUsuario(@PathVariable int id) {
-        Optional<Usuario> usuario = usuarioRepository.findById(id);
+    public ResponseEntity<String> excluirUsuario(@PathVariable int idUser) {
+        Optional<Usuario> usuario = usuarioRepository.findById(idUser);
         if (usuario.isEmpty()) {
             return new ResponseEntity<>("Usuário não encontrado.", HttpStatus.NOT_FOUND);
         }
