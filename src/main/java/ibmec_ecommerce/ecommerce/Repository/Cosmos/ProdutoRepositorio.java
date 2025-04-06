@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProdutoRepositorio extends ReactiveCrudRepository<Produto, String> {
+public interface ProdutoRepositorio extends CrudRepository<Produto, String> {
     // Métodos personalizados podem ser adicionados aqui
 }
