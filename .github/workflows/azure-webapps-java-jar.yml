@@ -55,4 +55,4 @@ jobs:
           app-name: 'ecommerceweb'
           slot-name: 'Production'
           package: '*.jar'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_196ca461a47e42a4b0267c7e8b4737ac }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
