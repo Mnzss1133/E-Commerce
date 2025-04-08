@@ -1,0 +1,14 @@
+ibmec_ecommerce\ecommerce\Model\Usuario.class
+ibmec_ecommerce\ecommerce\Model\Endereco.class
+ibmec_ecommerce\ecommerce\Request\TransacaoRequest.class
+ibmec_ecommerce\ecommerce\Repository\Cosmos\ProdutoRepositorio.class
+ibmec_ecommerce\ecommerce\Repository\UsuarioRepositorio.class
+ibmec_ecommerce\ecommerce\Controllers\CartaoControle.class
+ibmec_ecommerce\ecommerce\EcommerceApplication.class
+ibmec_ecommerce\ecommerce\Model\Produto.class
+ibmec_ecommerce\ecommerce\Controllers\UsuarioControle.class
+ibmec_ecommerce\ecommerce\Controllers\ProdutoController.class
+ibmec_ecommerce\ecommerce\Model\Cartao.class
+ibmec_ecommerce\ecommerce\Repository\CartaoRepositorio.class
+ibmec_ecommerce\ecommerce\Request\TransacaoResponse.class
+ibmec_ecommerce\ecommerce\Request\RelatorioVendas.class

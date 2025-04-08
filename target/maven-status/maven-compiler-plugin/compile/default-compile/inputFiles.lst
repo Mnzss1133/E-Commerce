@@ -1,0 +1,14 @@
+C:\Users\PICHAU\E-Commerce\src\main\java\ibmec_ecommerce\ecommerce\Controllers\CartaoControle.java
+C:\Users\PICHAU\E-Commerce\src\main\java\ibmec_ecommerce\ecommerce\Controllers\ProdutoController.java
+C:\Users\PICHAU\E-Commerce\src\main\java\ibmec_ecommerce\ecommerce\Controllers\UsuarioControle.java
+C:\Users\PICHAU\E-Commerce\src\main\java\ibmec_ecommerce\ecommerce\EcommerceApplication.java
+C:\Users\PICHAU\E-Commerce\src\main\java\ibmec_ecommerce\ecommerce\Model\Cartao.java
+C:\Users\PICHAU\E-Commerce\src\main\java\ibmec_ecommerce\ecommerce\Model\Endereco.java
+C:\Users\PICHAU\E-Commerce\src\main\java\ibmec_ecommerce\ecommerce\Model\Produto.java
+C:\Users\PICHAU\E-Commerce\src\main\java\ibmec_ecommerce\ecommerce\Model\Usuario.java
+C:\Users\PICHAU\E-Commerce\src\main\java\ibmec_ecommerce\ecommerce\Repository\CartaoRepositorio.java
+C:\Users\PICHAU\E-Commerce\src\main\java\ibmec_ecommerce\ecommerce\Repository\Cosmos\ProdutoRepositorio.java
+C:\Users\PICHAU\E-Commerce\src\main\java\ibmec_ecommerce\ecommerce\Repository\UsuarioRepositorio.java
+C:\Users\PICHAU\E-Commerce\src\main\java\ibmec_ecommerce\ecommerce\Request\RelatorioVendas.java
+C:\Users\PICHAU\E-Commerce\src\main\java\ibmec_ecommerce\ecommerce\Request\TransacaoRequest.java
+C:\Users\PICHAU\E-Commerce\src\main\java\ibmec_ecommerce\ecommerce\Request\TransacaoResponse.java

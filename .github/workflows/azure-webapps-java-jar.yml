@@ -54,7 +54,7 @@ jobs:
         with:
           app-name: 'ecommerceweb'
           slot-name: 'Production'
-          package: '*.jar'         
+          package: 'ecommerce-0.0.1-SNAPSHOT.jar'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           
           
