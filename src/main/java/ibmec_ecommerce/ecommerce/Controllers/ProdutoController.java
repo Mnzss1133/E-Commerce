@@ -34,4 +34,5 @@ public class ProdutoController {
         List<Produto> produtos = (List<Produto>) produtoRepositorio.findAll();
         return new ResponseEntity<>(produtos, HttpStatus.OK);
     }
+
 }
