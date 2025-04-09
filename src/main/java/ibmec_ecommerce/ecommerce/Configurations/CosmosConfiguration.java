@@ -14,7 +14,7 @@ import com.azure.spring.data.cosmos.repository.config.EnableReactiveCosmosReposi
 
 @Configuration
 @EnableConfigurationProperties(CosmosProperties.class)
-@EnableCosmosRepositories(basePackages = "br.edu.ibmec.cloud.ecommerce_cloud.repository.cosmos")
+@EnableCosmosRepositories(basePackages = "ibmec_ecommerce.ecommerce.Repository.Cosmos")
 @EnableReactiveCosmosRepositories
 @PropertySource("classpath:application.properties")
 public class CosmosConfiguration extends AbstractCosmosConfiguration {
