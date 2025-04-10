@@ -36,16 +36,20 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<String> criarUsuario(@RequestBody Usuario usuario) {
         // Verificar se o saldo do cartão de crédito do usuário é suficiente
-        if (!usuario.temSaldoSuficiente(100.0)) {  // Exemplo de verificação com valor 100.0
+        if (!usuario.temSaldoSuficiente(100.0)) {
             return ResponseEntity.badRequest().body("Saldo insuficiente no cartão de crédito.");
         }
 
-        // Salvar o usuário no banco de dados
+        // Corrigir o relacionamento: setar o usuário em cada cartão
+        for (Cartao cartao : usuario.getCartoes()) {
+            cartao.setUsuario(usuario);
+        }
+
         usuarioRepository.save(usuario);
 
-        // Retornar resposta com sucesso
         return new ResponseEntity<>("Usuário criado com sucesso.", HttpStatus.CREATED);
     }
+
 
     // Método para atualizar as informações de um usuário
     @PutMapping("/{id}")
