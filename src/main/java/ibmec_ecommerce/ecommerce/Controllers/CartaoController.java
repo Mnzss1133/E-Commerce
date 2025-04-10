@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/users/{idusuario}/credit-card")
+@RequestMapping("/usuario/{idusuario}/cartoes")
 public class CartaoController {
 
     @Autowired

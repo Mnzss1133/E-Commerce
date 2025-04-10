@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import ibmec_ecommerce.ecommerce.Model.Cartao;
+
 
 @Data
 @Entity(name = "usuario")
