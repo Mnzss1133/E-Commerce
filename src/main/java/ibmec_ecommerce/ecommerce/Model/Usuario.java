@@ -49,6 +49,7 @@ public class Usuario {
 
     // Relacionamento OneToMany com Endereco
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    @JsonManagedReference
     private List<Endereco> enderecos;
 
     // Método para verificar se o saldo total de todos os cartões é suficiente

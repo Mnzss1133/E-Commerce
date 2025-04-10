@@ -2,7 +2,7 @@ package ibmec_ecommerce.ecommerce.Model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 @Data
 @Entity(name = "endereco")
 public class Endereco {
@@ -31,6 +31,7 @@ public class Endereco {
     // Relacionamento com o usuário
     @ManyToOne
     @JoinColumn(name = "id_usuario")  // Chave estrangeira para o usuário
+    @JsonBackReference
     private Usuario usuario;  // Cada endereço pertence a um usuário
 }
 
