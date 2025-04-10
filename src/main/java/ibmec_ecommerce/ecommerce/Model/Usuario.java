@@ -6,6 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import ibmec_ecommerce.ecommerce.Model.Cartao;
 
@@ -43,6 +44,7 @@ public class Usuario {
 
     // Relacionamento OneToMany com Cartao
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    @JsonManagedReference
     private List<Cartao> cartoes;
 
     // Relacionamento OneToMany com Endereco
