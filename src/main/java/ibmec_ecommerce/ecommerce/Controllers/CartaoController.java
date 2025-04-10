@@ -36,6 +36,7 @@ public class CartaoController {
         Usuario usuario = usuarioOptional.get();
 
         // Salva o cartão e associa ao usuário
+        cartao.setUsuario(usuario);
         cartaoRepository.save(cartao);
         usuario.getCartoes().add(cartao);
         usuarioRepositorio.save(usuario);
