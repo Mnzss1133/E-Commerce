@@ -1,7 +1,7 @@
 package ibmec_ecommerce.ecommerce.Model;
 import jakarta.persistence.*;
 import lombok.Data;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.time.LocalDateTime;
 @Data
@@ -26,6 +26,6 @@ public class Cartao {
     // Adicionando o relacionamento com o usuário
     @ManyToOne
     @JoinColumn(name = "id_usuario")  // Chave estrangeira para o usuário
-    @JsonManagedReference
+    @JsonBackReference
     private Usuario usuario;
 }
