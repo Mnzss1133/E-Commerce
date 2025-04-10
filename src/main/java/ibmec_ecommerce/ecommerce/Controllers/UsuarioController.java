@@ -35,7 +35,7 @@ public class UsuarioController {
     // Método para criar um novo usuário
     @PostMapping
     public ResponseEntity<String> criarUsuario(@RequestBody Usuario usuario) {
-        // Verificar se o saldo do cartão de crédito do usuário é suficiente
+
 
         // Corrigir o relacionamento: setar o usuário em cada cartão
         for (Cartao cartao : usuario.getCartoes()) {
