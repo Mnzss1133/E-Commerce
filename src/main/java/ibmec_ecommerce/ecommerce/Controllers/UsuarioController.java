@@ -36,9 +36,6 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<String> criarUsuario(@RequestBody Usuario usuario) {
         // Verificar se o saldo do cartão de crédito do usuário é suficiente
-        if (!usuario.temSaldoSuficiente(100.0)) {
-            return ResponseEntity.badRequest().body("Saldo insuficiente no cartão de crédito.");
-        }
 
         // Corrigir o relacionamento: setar o usuário em cada cartão
         for (Cartao cartao : usuario.getCartoes()) {
@@ -63,7 +60,7 @@ public class UsuarioController {
         // Atualizar o cartão de crédito do usuário, se necessário
         Usuario usuarioAtualizado = usuarioExistente.get();
         if (usuario.getCartoes() != null && !usuario.getCartoes().isEmpty()) {
-            // Aqui você pode adicionar lógica para atualizar o cartão de crédito
+            //  atualizar o cartão de crédito
             Cartao novoCartao = usuario.getCartoes().get(0);
             usuarioAtualizado.getCartoes().clear();  // Limpa os cartões antigos
             usuarioAtualizado.getCartoes().add(novoCartao);  // Adiciona o novo cartão
