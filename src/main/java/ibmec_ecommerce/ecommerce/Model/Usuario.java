@@ -33,7 +33,7 @@ public class Usuario {
 
   
     @Column   
-    private LocalDate dtNascimento;
+    private LocalDateTime dtNascimento;
 
     @Column
     private String cpf;
