@@ -7,7 +7,7 @@ Endpoints para gerenciamento de usuários, configurações e tickers monitorados
 ## **Rotas Disponíveis**
 
 ### **1. Cadastrar Usuário**
-**`POST /usuarios`**  
+**`POST /usuario`**  
 Cria um novo usuário.
 
 **Request Body (JSON):**
