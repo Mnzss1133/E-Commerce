@@ -21,19 +21,32 @@ Cria um novo usuário.
     
 }
 ```
-### **2. Obter Usuário**
-**`POST /usuarios/{usuario_id}/cartoes**
-Retorna um usuário existente.
+### **2. Alterar Usuário**
+**`PUT /usuario`**  
+Alterar um novo usuário.
+
+**Request Body (JSON):**
+```json
+{
+    "nome": "string",
+    "email": "string",
+    "dtNascimento": "string",
+    "cpf": "string",
+    "telefone":"string"
+    
+}
+```
 
 ### **3. Obter Usuários**
-**`GET /usuarios/{usuario_id}`**
+**`GET /usuario`**
 Retorna todos os usuários existentes.
 
 
 
 ### **5. Cadastrar Produtos**
 **`POST /produtos`**
-Adiciona tracking tickers(moedas de rastreio) para um usuário.
+**`GET /produtos/{produtoID}`**
+Adiciona produto/Retorna produto.
 
 **Request Body (JSON):**
 ```json
@@ -49,12 +62,39 @@ Adiciona tracking tickers(moedas de rastreio) para um usuário.
   "productDescription": "Um smartphone avançado com câmera de alta resolução"
 }
 ```
-### **6. Atualizar Usuário**
-**`PUT /usuarios/{user_id}`**
-Atualizar usuário
-### **7. Deletar Usuário**
-**`DELETE /usuarios/{user_id}`**
+
+### **6. Deletar Usuário**
+**`DELETE /usuario/{user_id}`**
 Deleta um usuário existente.
 
+### **7. Criar Cartao**
+**`POST /usuario/{user_id}/cartoes`**
+```json
+{
+  
+  "numero": "1234-5678-9012-3456",
+  "dtExpiracao": "2025-12-31T23:59:59",
+  "cvv": "123",
+  "saldo": 1500.75
+}
+
+```
+
+### **8. Criar Endereco**
+**`POST /usuario/{user_id}/cartoes`**
+```json
+{
+  
+  "logradouro": "Rua das Flores",
+  "complemento": "Apto 202",
+  "bairro": "Centro",
+  "cidade": "Rio de Janeiro",
+  "estado": "RJ",
+  "cep": "20000-000"
+  
+  
+}
+`
+```
 Integrantes:
 João Pedro Menezes, Breno França
