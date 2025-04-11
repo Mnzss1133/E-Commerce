@@ -7,8 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import java.time.LocalDate;
+
 
 
 
@@ -33,8 +32,7 @@ public class Usuario {
     private String email;
 
   
-    @Column
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @Column   
     private LocalDate dtNascimento;
 
     @Column
