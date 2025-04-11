@@ -75,7 +75,7 @@ public class UsuarioController {
         // Salvar o usuário atualizado no banco de dados
         usuarioRepository.save(usuarioAtualizado);
 
-        return new ResponseEntity<>("Usuário e cartão de crédito atualizados com sucesso.", HttpStatus.OK);
+        return new ResponseEntity<>("Usuário atualizado.", HttpStatus.OK);
     }
 
     // Método para excluir um usuário
