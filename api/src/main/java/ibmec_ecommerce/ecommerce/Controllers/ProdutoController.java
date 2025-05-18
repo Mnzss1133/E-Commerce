@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ibmec_ecommerce.ecommerce.Repository.Cosmos.ProdutoRepositorio;
+import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +34,19 @@ public class ProdutoController {
     public ResponseEntity<List<Produto>> listarProdutos() {
         List<Produto> produtos = (List<Produto>) produtoRepositorio.findAll();
         return new ResponseEntity<>(produtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Produto>> buscarProdutos(@RequestParam(required = false) String productName) {
+        List<Produto> produtos;
+
+        if (productName == null || productName.isBlank()) {
+            produtos = (List<Produto>) produtoRepositorio.findAll();
+        } else {
+            produtos = produtoRepositorio.findByProductNameContainingIgnoreCase(productName);
+        }
+
+        return ResponseEntity.ok(produtos);
     }
 
 }
