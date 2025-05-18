@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface ProdutoRepositorio extends CosmosRepository<Produto, String> {
-    Optional<List<Produto>> findByProductNameContains(String productName);
+    List<Produto> findByProductNameContaining(String productName);
 
 }

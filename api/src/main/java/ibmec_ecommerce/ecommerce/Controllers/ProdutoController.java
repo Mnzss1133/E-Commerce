@@ -37,16 +37,9 @@ public class ProdutoController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Produto>> buscarProdutos(@RequestParam(required = false) String productName) {
-        List<Produto> produtos;
-
-        if (productName == null || productName.isBlank()) {
-            produtos = (List<Produto>) produtoRepositorio.findAll();
-        } else {
-            produtos = produtoRepositorio.findByProductNameContainingIgnoreCase(productName);
-        }
-
-        return ResponseEntity.ok(produtos);
+    public ResponseEntity<List<Produto>> buscarProdutos(@RequestParam String productName) {
+        List<Produto> produtos = produtoRepositorio.findByProductNameContaining(productName);
+        return new ResponseEntity<>(produtos, HttpStatus.OK);
     }
 
 }
