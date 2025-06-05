@@ -1,47 +1,33 @@
 import requests
-import json
+from config import DefaultConfig
 
 class ProductAPI:
     def __init__(self):
-        from config import DefaultConfig
         self.config = DefaultConfig()
-        self.base_url = f"{self.config.URL_PREFIX}/api"
-    
+        self.base_url = f"{self.config.URL_PREFIX}/products"  # Direto na rota de produtos
+
     def get_products(self):
         """
-        Obtém a lista de produtos do e-commerce
+        Obtém todos os produtos (útil para listagens gerais)
         """
         try:
-            response = requests.get(f"{self.base_url}/products")
-            if response.status_code == 200:
-                return response.json()
-            else:
-                return {"error": f"Erro ao buscar produtos: {response.status_code}"}
-        except Exception as e:
-            return {"error": f"Exceção ao buscar produtos: {str(e)}"}
-    
-    def get_product_by_id(self, product_id):
+            response = requests.get(self.base_url)
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            return {"error": str(e)}
+
+    def search_product(self, product_name: str):
         """
-        Obtém um produto específico pelo ID
-        """
-        try:
-            response = requests.get(f"{self.base_url}/products/{product_id}")
-            if response.status_code == 200:
-                return response.json()
-            else:
-                return {"error": f"Erro ao buscar produto: {response.status_code}"}
-        except Exception as e:
-            return {"error": f"Exceção ao buscar produto: {str(e)}"}
-    
-    def get_orders(self):
-        """
-        Obtém a lista de pedidos do e-commerce
+        Busca um produto pelo nome usando a rota /products/search
+        Ideal para interação com chatbot
         """
         try:
-            response = requests.get(f"{self.base_url}/orders")
-            if response.status_code == 200:
-                return response.json()
-            else:
-                return {"error": f"Erro ao buscar pedidos: {response.status_code}"}
-        except Exception as e:
-            return {"error": f"Exceção ao buscar pedidos: {str(e)}"}
+            response = requests.get(
+                f"{self.config.URL_PREFIX}/products/search",
+                params={"productName": product_name}
+            )
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            return {"error": str(e)}
