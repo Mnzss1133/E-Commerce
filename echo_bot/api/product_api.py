@@ -1,33 +1,11 @@
+
 import requests
-from config import DefaultConfig
-
 class ProductAPI:
-    def __init__(self):
-        self.config = DefaultConfig()
-        self.base_url = f"{self.config.URL_PREFIX}/products"  # Direto na rota de produtos
-
-    def get_products(self):
-        """
-        Obtém todos os produtos (útil para listagens gerais)
-        """
+    def consultar_produtos(self, product_name):
         try:
-            response = requests.get(self.base_url)
-            response.raise_for_status()
-            return response.json()
-        except requests.exceptions.RequestException as e:
-            return {"error": str(e)}
+            response = requests.get("http://localhost:8080/products/search", params={"productName": product_name})
+            if (response.status_code == 200):
+                return response.json()
+        except Exception as e:
+            print(f"Não consegui consultar a API de Consulta de Produtos {e}")
 
-    def search_product(self, product_name: str):
-        """
-        Busca um produto pelo nome usando a rota /products/search
-        Ideal para interação com chatbot
-        """
-        try:
-            response = requests.get(
-                f"{self.config.URL_PREFIX}/products/search",
-                params={"productName": product_name}
-            )
-            response.raise_for_status()
-            return response.json()
-        except requests.exceptions.RequestException as e:
-            return {"error": str(e)}
