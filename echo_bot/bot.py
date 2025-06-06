@@ -5,9 +5,7 @@ from botbuilder.schema import ChannelAccount
 
 class MyBot(ActivityHandler):
     # See https://aka.ms/about-bot-activity-message to learn more about the message and other activity types.
-    #async def on_message_activity(self, turn_context: TurnContext):
-    #    await turn_context.send_activity(f"You said '{ turn_context.activity.text }'")
-
+    
     async def on_members_added_activity(
         self,
         members_added: ChannelAccount,
