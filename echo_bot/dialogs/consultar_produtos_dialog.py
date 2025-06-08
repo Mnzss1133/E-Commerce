@@ -46,19 +46,34 @@ class ConsultarProdutoDialog(ComponentDialog):
             
             # Normalizar imageUrl para lista
             if isinstance(image_urls, str):
-                image_urls = [image_urls]
+                # Se for string, pode conter múltiplas URLs separadas por vírgula, ponto e vírgula, ou espaço
+                separadores = [',', ';', '|', ' ']
+                urls_separadas = [image_urls]
+                
+                # Tentar separar por diferentes delimitadores
+                for sep in separadores:
+                    if sep in image_urls:
+                        urls_separadas = [url.strip() for url in image_urls.split(sep) if url.strip()]
+                        break
+                
+                image_urls = urls_separadas
             elif not isinstance(image_urls, list):
                 image_urls = []
             
             # Processar e validar URLs de imagem
             valid_images = []
-            for url in image_urls:
+            for i, url in enumerate(image_urls):
                 if url and isinstance(url, str):
                     # Limpar e validar URL
                     clean_url = url.strip()
                     if self._is_valid_image_url(clean_url):
                         valid_images.append(CardImage(url=clean_url))
-                        logging.info(f"Imagem adicionada: {clean_url}")
+                        logging.info(f"Imagem {i+1} adicionada: {clean_url}")
+                
+                # Limitar a 5 imagens para não sobrecarregar o card
+                if len(valid_images) >= 5:
+                    logging.info(f"Limitando a 5 imagens (total encontradas: {len(image_urls)})")
+                    break
             
             # Se não tiver imagens válidas, usar placeholder
             if not valid_images:
@@ -67,6 +82,9 @@ class ConsultarProdutoDialog(ComponentDialog):
                 logging.info("Usando imagem placeholder")
             
             # Criar HeroCard com informações mais detalhadas
+            total_images = len(valid_images)
+           
+            
             card = HeroCard(
                 title=produto.get("nome", produto.get("productName", "Produto Sem Nome")),
                 subtitle=f"ID: {produto.get('id', 'N/A')} | Código: {produto.get('codigo', 'N/A')}",
@@ -138,22 +156,22 @@ class ConsultarProdutoDialog(ComponentDialog):
         text_parts = []
         
         if descricao:
-            text_parts.append(f"📝 **Descrição:** {descricao}")
+            text_parts.append(f" **Descrição:** {descricao}")
         
         if preco:
-            text_parts.append(f"💰 **Preço:** R$ {preco}")
+            text_parts.append(f" **Preço:** R$ {preco}")
         
         if categoria:
-            text_parts.append(f"🏷️ **Categoria:** {categoria}")
+            text_parts.append(f" **Categoria:** {categoria}")
         
         return "\n\n".join(text_parts) if text_parts else "Informações não disponíveis"
     
     async def _send_text_fallback(self, step_context, produto):
         """Enviar informações do produto como texto quando o card falha"""
         texto = f"""
-📦 **{produto.get('nome', produto.get('productName', 'Produto'))}**
-🆔 **ID:** {produto.get('id', 'N/A')}
-📝 **Descrição:** {produto.get('descricao', produto.get('productDescription', 'Sem descrição'))}
+    **{produto.get('nome', produto.get('productName', 'Produto'))}**
+    **ID:** {produto.get('id', 'N/A')}
+    **Descrição:** {produto.get('descricao', produto.get('productDescription', 'Sem descrição'))}
 """
         if produto.get('preco'):
             texto += f"\n💰 **Preço:** R$ {produto.get('preco')}"
