@@ -97,4 +97,41 @@ public class CartaoController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+@PostMapping("/{idcartao}/adicionar-saldo")
+public ResponseEntity<TransacaoResponse> adicionarSaldo(
+        @PathVariable("idusuario") int idUser,
+        @PathVariable("idcartao") int idCartao,
+        @RequestBody TransacaoRequest request) {
+
+    Optional<Usuario> usuarioOptional = usuarioRepositorio.findById(idUser);
+    if (usuarioOptional.isEmpty()) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    Optional<Cartao> cartaoOptional = cartaoRepository.findById(idCartao);
+    if (cartaoOptional.isEmpty()) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    Cartao cartao = cartaoOptional.get();
+    if (!cartao.getUsuario().getId().equals(idUser)) {
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN); // Cartão não pertence ao usuário
+    }
+
+    // Adiciona saldo
+    cartao.setSaldo(cartao.getSaldo() + request.getValor());
+    cartaoRepository.save(cartao);
+
+    // Retorna resposta
+    TransacaoResponse response = new TransacaoResponse();
+    response.setStatus("SALDO_ADICIONADO");
+    response.setMensagem("Saldo adicionado com sucesso");
+    response.setValor(request.getValor());
+    response.setNumeroCartao("****" + cartao.getNumero().substring(cartao.getNumero().length() - 4));
+    response.setDataHora(LocalDateTime.now());
+    response.setCodigoAutorizacao(UUID.randomUUID());
+
+    return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

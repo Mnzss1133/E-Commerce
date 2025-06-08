@@ -21,6 +21,10 @@ public class Usuario {
         this.status = "Ativo";  // Adicionando um status como atributo
     }
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Pedido> pedidos = new ArrayList<>();
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -31,7 +35,6 @@ public class Usuario {
     @Column
     private String email;
 
-  
     @Column   
     private LocalDateTime dtNascimento;
 
@@ -47,7 +50,7 @@ public class Usuario {
     // Relacionamento OneToMany com Cartao
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     @JsonManagedReference
-    private List<Cartao> cartoes;
+    private List<Cartao> cartoes = new ArrayList<>();
 
     // Relacionamento OneToMany com Endereco
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")

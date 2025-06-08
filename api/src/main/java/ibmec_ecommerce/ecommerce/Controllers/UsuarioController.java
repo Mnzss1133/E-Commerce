@@ -33,19 +33,20 @@ public class UsuarioController {
     }
 
     // Método para criar um novo usuário
-    @PostMapping
+    @PostMapping(consumes = {"application/json", "application/json;charset=UTF-8"})
     public ResponseEntity<String> criarUsuario(@RequestBody Usuario usuario) {
 
-
-        // Corrigir o relacionamento: setar o usuário em cada cartão
+    // Verifica se cartoes foi enviado no JSON
+    if (usuario.getCartoes() != null) {
         for (Cartao cartao : usuario.getCartoes()) {
             cartao.setUsuario(usuario);
         }
-
-        usuarioRepository.save(usuario);
-
-        return new ResponseEntity<>("Usuário criado com sucesso.", HttpStatus.CREATED);
     }
+
+    usuarioRepository.save(usuario);
+
+    return new ResponseEntity<>("Usuário criado com sucesso.", HttpStatus.CREATED);
+}
 
 
     // Método para atualizar as informações de um usuário
