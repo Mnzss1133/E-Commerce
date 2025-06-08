@@ -40,7 +40,7 @@ class ConsultarProdutoDialog(ComponentDialog):
             produto = produtos[0]  # Exibe apenas o primeiro produto encontrado
             resposta = (
                 f"Produto encontrado:\n"
-                f"Nome: R$ {"productName": product_name}"
+                f"Nome: {produto.get('productName')}"
             )
         else:
             resposta = "❌ Nenhum produto encontrado com esse nome."
