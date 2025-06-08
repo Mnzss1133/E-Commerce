@@ -17,6 +17,6 @@ class ExtratoCompraDialog(ComponentDialog):
         self.initial_dialog_id = "ExtratoCompraWaterfallDialog"
 
     async def prompt_option_step(self, step_context: WaterfallStepContext) :
-        await step_context.context.send_activity("Você está consultando o extrato de compras.")
+        await step_context.context.send_activity("Consultando o extrato de compras.")
         return await step_context.end_dialog()
 

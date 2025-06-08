@@ -24,11 +24,11 @@ class ConsultarProdutoDialog(ComponentDialog):
 
     async def product_name_step(self, step_context: WaterfallStepContext) :
                 
-        prompt_message = MessageFactory.text("Por favor, digite o nome do produto que você deseja consultar.")
+        prompt_message = MessageFactory.text("Digite o nome do produto para consultar")
         
         prompt_option = PromptOptions(
             prompt=prompt_message,
-            retry_prompt=MessageFactory.text("Desculpe, não consegui entender. Por favor, digite o nome do produto novamente."),
+            retry_prompt=MessageFactory.text("Digite o nome do produto novamente"),
         )
 
         return await step_context.prompt(TextPrompt.__name__, prompt_option)

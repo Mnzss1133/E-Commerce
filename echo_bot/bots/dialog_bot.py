@@ -44,7 +44,7 @@ class DialogBot(ActivityHandler):
             if member.id == turn_context.activity.recipient.id:
                 await turn_context.send_activity(
                     MessageFactory.text(
-                    f"Seja bem-vindo(a) ao bot de atendimento do IBMEC MALL! " 
-                    f"Digite uma mensagem para iniciar o atendimento."
+                    f"Bem-vindo(a) ao bot de atendimento do E-commerce! " 
+                    f"Digite qualquer mensagem para que o atendimento seja iniciado."
                     )
                 )
