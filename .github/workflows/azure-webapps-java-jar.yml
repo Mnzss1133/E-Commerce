@@ -27,6 +27,7 @@ jobs:
 
       -  name: Build sem rodar testes
          run: mvn clean install -DskipTests
+         working-directory: ./api
 
       
       - name: Upload do artefato para o deploy
