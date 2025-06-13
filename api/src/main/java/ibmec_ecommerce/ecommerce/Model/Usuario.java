@@ -21,8 +21,7 @@ public class Usuario {
         this.status = "Ativo";  // Adicionando um status como atributo
     }
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @Transient
     private List<Pedido> pedidos = new ArrayList<>();
 
     @Id
