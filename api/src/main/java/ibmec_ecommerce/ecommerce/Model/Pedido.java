@@ -1,37 +1,23 @@
 package ibmec_ecommerce.ecommerce.Model;
 
-import jakarta.persistence.*;
+import com.azure.spring.data.cosmos.core.mapping.Container;
+import com.azure.spring.data.cosmos.core.mapping.PartitionKey;
+import org.springframework.data.annotation.Id;
 import lombok.Data;
-import java.time.LocalDateTime;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 @Data
-@Entity(name = "pedido")
+@Container(containerName = "pedidos")
 public class Pedido {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;  // A chave primária para o pedido
 
-    @Column
-    private LocalDateTime dataHora;
+    @PartitionKey  // Defina a chave de partição, por exemplo, pelo id do usuário
+    private String usuarioId;  // ID do usuário que fez o pedido
 
-    @Column
-    private Double valorTotal;
+    private List<ProdutoEntity> produtos;  // Alterado para ProdutoEntity
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    @JsonBackReference
-    private Usuario usuario;
-
-    @ManyToMany
-    @JoinTable(
-    name = "pedido_produto",
-    joinColumns = @JoinColumn(name = "pedido_id"),
-    inverseJoinColumns = @JoinColumn(name = "produto_id")
-)
-private List<ProdutoEntity> produtos;
-
+    private Double valorTotal;  // Valor total do pedido
+    private String dataHora;  // Data e hora do pedido
 }
-

@@ -2,6 +2,7 @@ package ibmec_ecommerce.ecommerce.Controllers;
 
 import ibmec_ecommerce.ecommerce.Model.*;
 import ibmec_ecommerce.ecommerce.Repository.*;
+import ibmec_ecommerce.ecommerce.Repository.Cosmos.PedidoRepositorio;
 import ibmec_ecommerce.ecommerce.Repository.Cosmos.ProdutoRepositorio;
 import ibmec_ecommerce.ecommerce.Request.PedidoRequest;
 
@@ -31,10 +32,9 @@ public class PedidoController {
     @Autowired
     private ProdutoEntityRepositorio produtoEntityRepositorio;
 
-
     @PostMapping
-    public ResponseEntity<?> realizarPedido(@PathVariable int idusuario, @RequestBody PedidoRequest pedidoRequest) {
-        Optional<Usuario> usuarioOptional = usuarioRepositorio.findById(idusuario);
+    public ResponseEntity<?> realizarPedido(@PathVariable Integer idusuario, @RequestBody PedidoRequest pedidoRequest) {
+        Optional<Usuario> usuarioOptional = usuarioRepositorio.findById(idusuario);  // Aqui, idusuario é Integer
         if (usuarioOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
         }
@@ -56,22 +56,22 @@ public class PedidoController {
         double valorTotal = 0;
 
         for (String idProduto : pedidoRequest.getProdutosIds()) {
-        Optional<Produto> produtoOptional = produtoRepositorio.findById(idProduto);
-        if (produtoOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto com ID " + idProduto + " não encontrado");
+            Optional<Produto> produtoOptional = produtoRepositorio.findById(idProduto);
+            if (produtoOptional.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto com ID " + idProduto + " não encontrado");
+            }
+            Produto produto = produtoOptional.get();
+
+            // Converter Produto (Cosmos) para ProdutoEntity (relacional)
+            ProdutoEntity produtoEntity = new ProdutoEntity();
+            produtoEntity.setId(produto.getId());
+            produtoEntity.setProductName(produto.getProductName());
+            produtoEntity.setPrice(produto.getPrice());
+            produtoEntityRepositorio.save(produtoEntity);
+
+            produtos.add(produtoEntity);
+            valorTotal += produto.getPrice();
         }
-        Produto produto = produtoOptional.get();
-
-        // Converter Produto (Cosmos) para ProdutoEntity (relacional)
-        ProdutoEntity produtoEntity = new ProdutoEntity();
-        produtoEntity.setId(produto.getId());
-        produtoEntity.setProductName(produto.getProductName());
-        produtoEntity.setPrice(produto.getPrice());
-        produtoEntityRepositorio.save(produtoEntity);
-
-        produtos.add(produtoEntity);
-        valorTotal += produto.getPrice();
-    }
 
         if (cartao.getSaldo() < valorTotal) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Saldo insuficiente no cartão");
@@ -83,9 +83,9 @@ public class PedidoController {
 
         // Criar e salvar pedido
         Pedido pedido = new Pedido();
-        pedido.setUsuario(usuario);
-        pedido.setProdutos(produtos);
-        pedido.setDataHora(LocalDateTime.now());
+        pedido.setUsuarioId(idusuario.toString());  // Salvar o ID do usuário como chave de partição, convertendo para String
+        pedido.setProdutos(produtos);    // Aqui você já tem uma lista de ProdutoEntity
+        pedido.setDataHora(LocalDateTime.now().toString());
         pedido.setValorTotal(valorTotal);
         pedidoRepositorio.save(pedido);
 
@@ -93,22 +93,13 @@ public class PedidoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Pedido>> listarPedidos(@PathVariable int idusuario) {
-        Optional<Usuario> usuarioOptional = usuarioRepositorio.findById(idusuario);
-        if (usuarioOptional.isEmpty()) {
+    public ResponseEntity<List<Pedido>> listarPedidos(@PathVariable Integer idusuario) {
+        // Busca os pedidos do usuário
+        List<Pedido> pedidos = pedidoRepositorio.findByUsuarioId(idusuario.toString());  // Passando o idusuario como String
+        if (pedidos.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        List<Pedido> pedidos = pedidoRepositorio.findAll();
-        List<Pedido> pedidosUsuario = new ArrayList<>();
-
-        for (Pedido pedido : pedidos) {
-            if (pedido.getUsuario().getId().equals(idusuario)) {
-                pedidosUsuario.add(pedido);
-            }
-        }
-
-        return new ResponseEntity<>(pedidosUsuario, HttpStatus.OK);
+        return new ResponseEntity<>(pedidos, HttpStatus.OK);
     }
 }
-
